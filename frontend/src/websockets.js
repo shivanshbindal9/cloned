@@ -5,3 +5,7 @@ chatSocket.onclose = function(e) {
     };
 
 console.log("WebSocket");
+
+chatSocket.onopen = function(e) {
+        console.log('U are connected to default websocket');
+    };

@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import React, { Component } from 'react';
 import {auth} from "../actions";
+import Youtube from './Youtube';
 
 class Player extends Component {
 
@@ -23,10 +24,11 @@ class Player extends Component {
    return(
         <div>
          <h1> This is Player </h1>
-         <hr />
         <div style={{textAlign: "right"}}>
           {this.props.user.username} (<a onClick={this.handleclick}>logout</a>)
         </div>
+         <hr />
+         <Youtube />
         </div>
    
        );
