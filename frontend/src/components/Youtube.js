@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player';
+import Rplayer from './Rplayer';
 
 var api = 'AIzaSyDqch5WUdG88xzLOuRJzBJE6xaMR0T2-lE';
 var results = 10;
@@ -10,6 +11,10 @@ class Youtube extends Component {
  componentDidMount () {
    this.connection = new WebSocket('ws://localhost:8000/ws/stream/');
    this.connection.onopen = (e) => {console.log('Youtube Socket connected Successfully')}
+   this.connection.onclose = (e) => {
+        console.error('Chat socket closed unexpectedly');
+    }
+
    this.connection.onmessage = (e) => {
           var data = JSON.parse(e.data);
           var message = data['url'];
@@ -37,7 +42,7 @@ class Youtube extends Component {
     const resultyt = responseJson.items.map(obj => "https://www.youtube.com/watch?v="+ obj.id.videoId);
     this.setState({resultyt : resultyt});
     this.connection.send(JSON.stringify({
-            'url': this.state.resultyt
+            'url': this.state.resultyt,
         }))
 
     })
@@ -56,7 +61,7 @@ class Youtube extends Component {
     return (
       <div>
         I m from youtube
-        <ReactPlayer url={this.state.resultyt[0]} playing />
+        <Rplayer url={this.state.resultyt[0]} playing={true} controls = {true} />
         <input type="text" id="search" />
         <input type="submit" value="Search!" onClick={this.handleSearch} />
       </div> 

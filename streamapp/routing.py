@@ -4,4 +4,5 @@ from . import consumers
 
 websocket_urlpatterns = [
     url(r'^ws/stream/$', consumers.ChatConsumer),
+    url(r'^ws/controls/$', consumers.ControlConsumer),
 ]

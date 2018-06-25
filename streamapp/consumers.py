@@ -29,7 +29,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             "stream",
             {
                 'type': 'stream_url',
-                'url': url
+                'url': url,
             }
         )
 
@@ -39,6 +39,52 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'url': url
+            'url': url,
+        }))
+
+
+class ControlConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+
+        # Join room group
+        await self.channel_layer.group_add(
+            "streams",
+            self.channel_name
+        )
+
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        # Leave room group
+        await self.channel_layer.group_discard(
+            "streams",
+            self.channel_name
+        )
+
+    # Receive message from WebSocket
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        play = text_data_json['play']
+        mute = text_data_json['mute']
+
+        # Send message to room group
+        await self.channel_layer.group_send(
+            "streams",
+            {
+                'type': 'stream_control',
+                'play': play,
+                'mute': mute,
+            }
+        )
+
+    # Receive message from room group
+    async def stream_control(self, event):
+        play = event['play']
+        mute = event['mute']
+
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({
+            'play': play,
+            'mute': mute,
         }))
 

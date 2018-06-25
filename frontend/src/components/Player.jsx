@@ -10,9 +10,6 @@ class Player extends Component {
       this.handleclick = this.handleclick.bind(this);
 }
 
-  async componentDidMount () {
-      await import('../websockets.js');
-}
 
   handleclick(e){
   e.preventDefault();
