@@ -1,12 +1,23 @@
 import React, {Component} from 'react';
+import VideoDetail from './video_detail';
 import ReactPlayer from 'react-player';
 import Rplayer from './Rplayer';
+import VideoList from './video_list';
+import YTSearch from 'youtube-api-search';
+import SearchBar from './search_bar';
 
 var api = 'AIzaSyDqch5WUdG88xzLOuRJzBJE6xaMR0T2-lE';
 var results = 10;
 
 
 class Youtube extends Component {
+
+constructor(props){
+    super(props);
+
+
+    this.videoSearch('React Tutorials');
+}
 
  componentDidMount () {
    this.connection = new WebSocket('ws://localhost:8000/ws/stream/');
@@ -25,9 +36,22 @@ class Youtube extends Component {
    
   
  state = {
-   resultyt : []
+   resultyt : [],
+   videos: [],
+   selectedVideo: null
 };
   
+ videoSearch(searchTerm) {
+  YTSearch({key: api, term: searchTerm}, (data) => {
+    console.log(data);
+      this.setState({ 
+          videos: data,
+          selectedVideo: data[0]
+          
+      });
+  });
+
+}
 
 
   handleSearch = (e) => {
@@ -54,7 +78,6 @@ class Youtube extends Component {
      
 }
 
-
   render() {
 
     console.log(this.state.resultyt);
@@ -62,8 +85,11 @@ class Youtube extends Component {
       <div>
         I m from youtube
         <Rplayer url={this.state.resultyt[0]} playing={true} controls = {true} />
-        <input type="text" id="search" />
-        <input type="submit" value="Search!" onClick={this.handleSearch} />
+        <VideoDetail video={this.state.selectedVideo}/>
+        <SearchBar onSearchTermChange={searchTerm => this.videoSearch(searchTerm)}/>
+        <VideoList 
+          onVideoSelect={userSelected => this.setState({selectedVideo: userSelected})}
+videos={this.state.videos} />
       </div> 
      );
  } 
