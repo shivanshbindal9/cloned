@@ -2,6 +2,9 @@ import {connect} from 'react-redux';
 import React, { Component } from 'react';
 import {auth} from "../actions";
 import Youtube from './Youtube';
+import { Menu } from 'semantic-ui-react';
+import playerimg from '../images/playerimg.jpg';
+import './styles.css';
 
 class Player extends Component {
 
@@ -13,18 +16,26 @@ class Player extends Component {
 
   handleclick(e){
   e.preventDefault();
-  window.location.reload();
   this.props.logout();
+  //  window.location.reload();
 } 
 
   render(){
    return(
         <div>
-         <h1> This is Player </h1>
-        <div style={{textAlign: "right"}}>
+        <Menu fluid fixed="top">
+        <Menu.Menu>
+        <Menu.Item>
+        <div> This is Player </div>   <img src = {playerimg} className="NavBar-logo" /> 
+        </Menu.Item>
+        </Menu.Menu>
+        <Menu.Menu position="right">
+        <Menu.Item >
           {this.props.user.username} (<a onClick={this.handleclick}>logout</a>)
-        </div>
-         <hr />
+        </Menu.Item>
+        </Menu.Menu>
+        </Menu>
+         
          <Youtube />
         </div>
    

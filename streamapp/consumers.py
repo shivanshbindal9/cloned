@@ -66,6 +66,7 @@ class ControlConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         play = text_data_json['play']
         mute = text_data_json['mute']
+        volume = text_data_json['volume']
 
         # Send message to room group
         await self.channel_layer.group_send(
@@ -74,6 +75,7 @@ class ControlConsumer(AsyncWebsocketConsumer):
                 'type': 'stream_control',
                 'play': play,
                 'mute': mute,
+                'volume': volume,
             }
         )
 
@@ -81,10 +83,12 @@ class ControlConsumer(AsyncWebsocketConsumer):
     async def stream_control(self, event):
         play = event['play']
         mute = event['mute']
+        volume = event['volume']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'play': play,
             'mute': mute,
+            'volume': volume,
         }))
 

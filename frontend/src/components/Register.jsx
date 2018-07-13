@@ -4,6 +4,14 @@ import {connect} from "react-redux";
 import {Link, Redirect} from "react-router-dom";
 
 import {auth} from "../actions";
+import playerimg from '../images/playerimg.jpg';
+import { Button, Checkbox, Form, Grid, Image, Message } from 'semantic-ui-react';
+
+const styles = {
+  root: {
+    marginTop: '5%'
+  }
+}
 
 class Login extends Component {
 
@@ -30,9 +38,12 @@ class Login extends Component {
             return <Redirect to="/" />
         }
         return (
-            <form onSubmit={this.onSubmit}>
+           <Grid centered style={styles.root}>
+             <Grid.Column width={6}>
+               <form onSubmit={this.onSubmit}>
                 <fieldset>
                     <legend>Register</legend>
+                  <Image src={playerimg} size='medium' centered />
                     {this.props.errors.length > 0 && (
                         <ul>
                             {this.props.errors.map(error => (
@@ -40,34 +51,38 @@ class Login extends Component {
                             ))}
                         </ul>
                     )}
-                    <p>
+                    <Form>
+                      <Form.Field>
                         <label htmlFor="username">Username</label>
                         <input
                             type="text" id="username"
                             onChange={e => this.setState({username: e.target.value})} />
-                    </p>
-                    <p>
+                    </Form.Field>
+                    <Form.Field>
                         <label htmlFor="password">Password</label>
                         <input
                             type="password" id="password"
                             onChange={e => this.setState({password: e.target.value})} />
-                    </p>
-                    <p>
-                        <label htmlFor="password">Password</label>
+                    </Form.Field>
+                    <Form.Field>
+                        <label htmlFor="password">Confirm Password</label>
                         <input
                             type="password" id="password"
                             onChange={e => this.setState({repassword: e.target.value})} />
-                    </p>
+                    </Form.Field>
 
                     <p>
-                        <button type="submit">Register</button>
+                        <Button type="submit" fluid size='large'>Register</Button>
                     </p>
 
-                    <p>
+                    <Message>
                         Already have an account? <Link to="/login">Login</Link>
-                    </p>
+                    </Message>
+                </Form>
                 </fieldset>
             </form>
+            </Grid.Column>
+           </Grid>
         )
     }
 }

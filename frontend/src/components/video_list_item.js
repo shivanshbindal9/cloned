@@ -3,15 +3,13 @@ import React, {Component} from 'react';
 class VideoListItem extends Component {
 
      componentDidMount () {
-   this.connection = new WebSocket('ws://localhost:8000/ws/stream/');
+   this.connection = new WebSocket('ws://127.0.0.1:8000/ws/stream/');
    this.connection.onclose = (e) => {
+        
         console.error('Chat socket closed unexpectedly');
+        window.location.reload();
     }
-
-   this.connection.onmessage = (e) => {
-          var data = JSON.parse(e.data);
-          var message = data['url'];
-    };
+  
     
     this.handleclick = this.handleclick.bind(this);
 }
@@ -26,6 +24,11 @@ console.log("onclick");
     const onUserSelected = this.props.onUserSelected;
     // console.log(video);    
     const imageUrl = video.snippet.thumbnails.default.url;
+    if(!video)
+{
+ return <div>Loading...</div>
+}    
+
 
     return (
     <li onClick={this.handleclick} onClick={() => {onUserSelected(video); console.log("hello");let url ='https://www.youtube.com/watch?v=' + video.id.videoId; this.connection.send(JSON.stringify({
