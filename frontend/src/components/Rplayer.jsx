@@ -96,7 +96,7 @@ setVolume = e => {
          <ReactPlayer url={this.props.url} width="100%" playing={this.state.play==="true"} muted={this.state.mute === 'false'}  volume={this.state.volume}/>
          <button onClick = {this.handlePlay}> {this.state.play==="true" ? 'pause' : 'play'} </button>
          <button onClick = {this.handleMute}> {this.state.mute === 'false' ? 'unmute' : 'mute'} </button>
-         <input type='range' min={0} max={1} step='ny' value={this.state.volume} onChange={this.setVolume} />
+         <input type='range' min={0} max={1} step='any' value={this.state.volume} onChange={this.setVolume} />
        </Grid.Column>
           </Grid>
        </div>
