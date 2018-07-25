@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+void swapr(string s,int n,int m)
+{
+    char tmp1, tmp2;
+}
+int main()
+{
+    int n;
+    cin>>n;
+   // int a[n/2];
+   string s;
+   for(int i=2;i<2*n+2;i+=2)
+   {
+       s[i] = 'B';
+       s[i+1] = 'A';
+       cout<<s[i]<<s[i+1];
+   }
+   cout<<endl;
+   
+        //cout<<n+2<<" to "<<-1;
+    int t=-4;
+    int t2 = 0;
+    while(3+t+4<n)
+    {   
+        cout<<n+2+t2<<" to" <<3+t<<endl;
+        cout<<3+t+4<<" to "<<n+2+t2<<endl;
+        t += 4;
+        t2 += 4;
+        
+    }
+    int t3 = 1;
+    int t4 = 0;
+    while(n-2+t3!=2*n-1)
+    {
+        cout<<t4<<" to "<<n-2+t3<<endl;
+        t3 += 4;
+        cout<<n-2+t3<<" to "<<t4<<endl;
+        t4 += 4;
+        }
+    
+}
